@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Master</title>
+    <style>
+        /* Global Styles */
+        body {
+            height: 795px;;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #a4ffd6);
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #006400;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a{
+            margin: 0 15px;
+            text-decoration: none;
+            color: #004d00;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            text-decoration:wavy;
+            color: #008000;
+        }
+        
+        #blogs-btn:hover{
+            text-decoration: wavy;
+            color: #008000;
+            cursor: pointer;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .notifications {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #ff4500;
+        }
+
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 100px 20px;
+            margin-top: 50px;
+            gap: 50px;
+        }
+
+        .welcome-text {
+            max-width: 600px;
+        }
+
+        .welcome-text h1 {
+            font-size: 3.5em;
+            margin: 0;
+            background: linear-gradient(to top, #006420, #00da57); /* Gradient colors */
+            -webkit-background-clip: text; /* Vendor prefix for WebKit browsers */
+            background-clip: text; /* Standard property for other browsers */
+            color: transparent; /* Make the actual text color transparent */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .welcome-highlight {
+            color: #ffa500;
+        } */
+
+        .welcome-text h2 {
+            font-size: 2.2em;
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .welcome-text p {
+            font-size: 1.2em;
+            color: #444;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        button {
+            background-color: #004d00;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #006400;
+            transform: scale(1.05);
+        }
+
+        .welcome-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); */
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">AGRI-MASTER</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/agribot">Agri-Bot</a>
+            <a id="blogs-btn">Articles</a>
+        </nav>
+        <div class="profile">
+            <span class="notifications">🔔 2</span>
+            <img src="{{ url_for('static', filename='assets/profile.jpeg') }}" alt="Profile Image" class="profile-img">
+        </div>
+    </header>
+
+    <!-- MAIN SECTION -->
+    <main class="welcome-section">
+        <div class="welcome-text">
+            <h1><span class="welcome-highlight">WELCOME</span></h1>
+            <h2>Hello! Farmer, I'm Here To Help You</h2>
+            <p>
+                Hey there, Nanba! 🌾
+                Forget the stress of constant monitoring—I've got you covered! With my advanced Real-Time Monitoring features,
+                you can keep an eye on your crops effortlessly. Whether it's day or night, I'll alert you on anything that needs your attention,
+                so you can focus on what truly matters: growing your farm and enjoying life. 🌱
+                Sit back, relax, and let me do the hard work for you!
+            </p>
+            <button id="agribot-btn">Explore AgriBot</button>
+        </div>
+        <div class="welcome-image">
+            <img src="{{ url_for('static', filename='assets/farmerhome.png') }}" alt="Farmer Illustration">
+        </div>
+    </main>
+    <script>
+        // JavaScript for Button Functionality
+        document.getElementById("agribot-btn").addEventListener("click", function() {
+            // Navigate to the AgriBot page
+            window.location.href = "/agribot";
+        });
+
+        document.getElementById("blogs-btn").addEventListener("click", function () {
+        window.location.href = "{{ blog_url }}"; // Flask dynamically provides Django blog URL
+    });
+    </script>
+</body>
+</html>

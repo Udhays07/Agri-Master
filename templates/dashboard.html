@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id='favicon' rel="shortcut icon" href="../static/logo.png" type="image/x-png">
+    <title>AgriGenius</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            height: 795px;;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #a4ffd6);
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #006400;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a{
+            margin: 0 15px;
+            text-decoration: none;
+            color: #004d00;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            text-decoration:wavy;
+            color: #008000;
+        }
+        
+        #blogs-btn:hover{
+            text-decoration: wavy;
+            color: #008000;
+            cursor: pointer;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .notifications {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #ff4500;
+        }
+
+            /* Styling for Pie Chart */
+        .pie-chart-container {
+        width: 400px;
+        margin: 30px auto;
+        text-align: center;
+        }
+    </style>
+</head>
+    <body>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo">AGRI-MASTER</div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/agribot">Agri-Bot</a>
+                <a id="blogs-btn">Articles</a>
+            </nav>
+            <div class="profile">
+                <span class="notifications">🔔 2</span>
+                <img src="{{ url_for('static', filename='assets/profile.jpeg') }}" alt="Profile Image" class="profile-img">
+            </div>
+        </header>
+        <div class="chatbot-container">
+            <div class="chat-window" id="chat-window">
+              <!-- Chat messages will be dynamically added here -->
+            </div>
+        
+          <div class="pie-chart-container">
+            <h2>Sample Pie Chart</h2>
+            <canvas id="myPieChart" width="400" height="400"></canvas>
+            <i class="fas fa-chart"></i>
+          </div>
+
+    </body>
+</body>
+<script>
+    // Fetch data from data.json file
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+    // Use the messages for the chat
+    const messages = data.messages;
+    const chartData = data.chartData;
+
+    // Populate the chat window with messages
+    messages.forEach(msg => {
+      appendMessage(msg.sender, msg.text);
+    });
+
+    // Initialize the Pie Chart with data from JSON
+    const config = {
+      type: 'pie',
+      data: chartData,
+    };
+
+    const myPieChart = new Chart(
+      document.getElementById('myPieChart'),
+      config
+    );
+  })
+  .catch(error => console.error('Error loading data:', error));
+
+// Handle sending messages
+function sendMessage() {
+  const userInput = document.getElementById('user-input');
+  const message = userInput.value.trim();
+
+  if (message === '') return;
+
+  // Add the user's message to the chat
+  appendMessage('user', message);
+
+  // Clear input field
+  userInput.value = '';
+
+  // Simulate bot response after a short delay
+  setTimeout(() => {
+    const botResponse = You said: "${message}";
+    appendMessage('bot', botResponse);
+  }, 1000);
+}
+
+// Append messages to the chat window
+function appendMessage(sender, message) {
+  const chatWindow = document.getElementById('chat-window');
+  const messageElement = document.createElement('div');
+  messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+  messageElement.textContent = message;
+  chatWindow.appendChild(messageElement);
+
+  // Auto scroll to the bottom of the chat window
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+</script>
+        
+        
