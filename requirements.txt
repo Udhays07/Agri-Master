@@ -1,0 +1,11 @@
+Flask
+numpy
+tensorflow
+requests
+PyPDF2
+pickle-mixin
+langchain
+langchain-community
+langchain-together
+chromadb
+sentence-transformers
